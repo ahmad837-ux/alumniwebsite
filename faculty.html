@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Research Faculty Database</title>
+  <style>
+    /* Add some basic styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: rgb(56, 28, 9);
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+      padding: 20px;
+    }
+
+    #search-form {
+      margin-bottom: 20px;
+      margin-left: 500px;
+    }
+
+    #faculty-list {
+      list-style-type: none;
+      padding: 0;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .faculty-item {
+      background-color: rgb(63, 22, 6);
+      margin-bottom: 10px;
+      line-height: 30px;
+    }
+
+    form {
+      size: 10px;
+      margin-left: 200px;
+    }
+
+    /* Animation for the faculty list items */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .faculty-item {
+    background-color: rgb(255, 72, 0);
+    margin: 10px;
+    line-height: 30px;
+    padding: 10px;
+    color:blackwheat;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+    /* Styling enhancements */
+    input[type="text"],
+    input[type="email"] {
+      padding: 5px;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      background-color: rgb(235, 80, 29);
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: rgb(208, 67, 23);
+    }
+  </style>
+</head>
+<body>
+  <h1>Research Faculty Database</h1>
+
+  <div id="search-form">
+    <input type="text" id="search-input" placeholder="Search by name...">
+    <button onclick="searchFaculty()">Search</button>
+  </div>
+
+  <ul id="faculty-list"></ul>
+
+  <h2>Add Research Faculty</h2>
+  <form id="add-faculty-form" onsubmit="addFaculty(event)">
+    <label for="name-input">Name:</label>
+    <input type="text" id="name-input" required>
+
+    <label for="specialization-input">Specialization:</label>
+    <input type="text" id="specialization-input" required>
+
+    <label for="email-input">Email:</label>
+    <input type="email" id="email-input" required>
+
+    <button type="submit">Add Faculty</button>
+  </form>
+
+  <script>
+    // Function to retrieve faculty data from localStorage
+    function getStoredFacultyData() {
+      const storedData = localStorage.getItem('facultyData');
+      return storedData ? JSON.parse(storedData) : [];
+    }
+
+    // Function to save faculty data to localStorage
+    function saveFacultyData(data) {
+      localStorage.setItem('facultyData', JSON.stringify(data));
+    }
+
+    // Faculty data
+    let facultyData = getStoredFacultyData();
+
+    // Function to add faculty
+    function addFaculty(event) {
+      event.preventDefault();
+
+      // Retrieve the values from the form inputs
+      const name = document.getElementById('name-input').value;
+      const specialization = document.getElementById('specialization-input').value;
+      const email = document.getElementById('email-input').value;
+
+      // Create a faculty object
+      const faculty = {
+        name: name,
+        specialization: specialization,
+        email: email
+      };
+
+      // Add the faculty to the facultyData array
+      facultyData.push(faculty);
+
+      // Clear the form inputs
+      document.getElementById('name-input').value = '';
+      document.getElementById('specialization-input').value = '';
+      document.getElementById('email-input').value = '';
+
+      // Save the updated faculty data
+      saveFacultyData(facultyData);
+
+      // Refresh the faculty list
+      renderFacultyList();
+    }
+
+    // Function to render the faculty list
+    function renderFacultyList() {
+      const facultyList = document.getElementById('faculty-list');
+      facultyList.innerHTML = '';
+
+      // Iterate over the facultyData array and create list items for each faculty member
+      for (let i = 0; i < facultyData.length; i++) {
+        const faculty = facultyData[i];
+
+        // Create the list item
+        const listItem = document.createElement('li');
+        listItem.classList.add('faculty-item');
+
+        // Build the content of the list item
+        const facultyContent = `
+          <strong>Name:</strong> ${faculty.name}<br>
+          <strong>Specialization:</strong> ${faculty.specialization}<br>
+          <strong>Email:</strong> ${faculty.email}
+        `;
+        listItem.innerHTML = facultyContent;
+
+        // Append the list item to the faculty list
+        facultyList.appendChild(listItem);
+      }
+    }
+
+    // Function to search for faculty members
+    function searchFaculty() {
+      const searchInput = document.getElementById('search-input').value.toLowerCase();
+
+      // Filter the facultyData array based on the search input
+      const filteredFaculty = facultyData.filter(faculty => {
+        const name = faculty.name.toLowerCase();
+        return name.includes(searchInput);
+      });
+
+      // Update the faculty list with the filtered faculty
+      renderFacultyList(filteredFaculty);
+    }
+
+    // Load the faculty data on page load
+    renderFacultyList();
+  </script>
+</body>
+</html>

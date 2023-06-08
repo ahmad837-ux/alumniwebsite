@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Alumni</title>
+  <style>
+    /* CSS styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f1f1f1;
+    }
+    
+    h1 {
+      text-align: center;
+      background-color: #41270f;
+      color: #fff;
+      padding: 10px;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .search-container {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .search-container input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #351b06;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .search-results {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .search-results li {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+    
+    .search-results li span {
+      font-weight: bold;
+    }
+    
+    .add-alumni-container {
+      text-align: center;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 30px;
+    }
+    
+    .add-alumni-container h2 {
+      background-color: #573305;
+      color: #fff;
+      padding: 10px;
+      margin: 0;
+    }
+    
+    .add-alumni-container input[type="text"],
+    .add-alumni-container input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .add-alumni-container select {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .add-alumni-container input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #000000;
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search Alumni</h1>
+  
+  <div class="container">
+    <div class="search-container">
+      <form>
+        <input type="text" id="searchInput" placeholder="Search alumni...">
+        <input type="submit" value="Search">
+      </form>
+    </div>
+    
+    <ul class="search-results" id="searchResults">
+      <!-- Alumni search results will be displayed here -->
+    </ul>
+    
+    <div class="add-alumni-container">
+      <h2>Add Alumni</h2>
+      <form id="addAlumniForm">
+        <input type="text" id="firstNameInput" placeholder="First Name" required>
+        <br>
+        <input type="text" id="lastNameInput" placeholder="Last Name" required>
+        <br>
+        <input type="email" id="emailInput" placeholder="Email" required>
+        <br>
+        <input type="text" id="workPlaceInput" placeholder="Work Place" required>
+        <br>
+        <select id="workInput" required>
+          <option value="" disabled selected>Select Work</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Android/Ios">Android/Ios</option>
+          <option value="Hacking">Hacking</option>
+          <option value="Networking">Networking</option>
+          <option value="Other">Other</option>
+        </select>
+        <br>
+        <input type="submit" value="Add Alumni">
+      </form>
+    </div>
+    
+  <script>
+    // JavaScript code for searching and adding alumni
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const addAlumniForm = document.getElementById('addAlumniForm');
+    let alumniData = [];
+    
+    // Check if alumniData exists in localStorage
+    if (localStorage.getItem('alumniData')) {
+      // Retrieve alumniData from localStorage
+      alumniData = JSON.parse(localStorage.getItem('alumniData'));
+    }
+    
+    function searchAlumni() {
+      const searchTerm = searchInput.value.toLowerCase();
+      
+      // Clear previous search results
+      searchResults.innerHTML = '';
+      
+      // Filter and display matching alumni
+      const matchingAlumni = alumniData.filter(alumni => {
+        const fullName = `${alumni.firstName} ${alumni.lastName}`.toLowerCase();
+        return fullName.includes(searchTerm);
+      });
+      
+      // Display matching alumni in the search results
+      matchingAlumni.forEach(alumni => {
+        const listItem = document.createElement('li');
+        const fullName = `${alumni.firstName} ${alumni.lastName}`;
+        listItem.innerHTML = `<span>${fullName}</span> - ${alumni.email} - ${alumni.work}`;
+        searchResults.appendChild(listItem);
+      });
+    }
+    
+    function addAlumni() {
+      const firstName = document.getElementById('firstNameInput').value;
+      const lastName = document.getElementById('lastNameInput').value;
+      const email = document.getElementById('emailInput').value;
+      const work = document.getElementById('workInput').value;
+      
+      // Create new alumni object
+      const newAlumni = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        work: work
+      };
+      
+      // Add new alumni to the data
+      alumniData.push(newAlumni);
+      
+      // Reset the form
+      addAlumniForm.reset();
+      
+      // Perform search to refresh the results
+      searchAlumni();
+      
+      // Store updated alumniData in localStorage
+      localStorage.setItem('alumniData', JSON.stringify(alumniData));
+    }
+    
+    // Add event listeners
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent form submission
+      searchAlumni();
+    });
+    
+    addAlumniForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent form submission
+      addAlumni();
+    });
+    
+    // Perform initial search
+    searchAlumni();
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: rgb(56, 28, 9);
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #login-form {
+      width: 300px;
+      margin: 0 auto;
+      background-color: rgb(63, 22, 6);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: rgb(235, 80, 29);
+      color: white;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: rgb(208, 67, 23);
+    }
+  </style>
+</head>
+<body>
+  <h1>Login Page</h1>
+
+  <div id="login-form">
+    <form onsubmit="login(event)">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
+  <script>
+    function login(event) {
+      event.preventDefault();
+
+      // Retrieve the username and password from the input fields
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Perform authentication logic (e.g., check against stored credentials or make an API call)
+      // For this example, let's assume the username is "admin" and the password is "password"
+      if (username === 'admin' && password === 'password') {
+        // Redirect to the main website page upon successful login
+        window.location.href = 'main_website.html';
+      } else {
+        // Display an error message for an invalid login
+        alert('Invalid username or password. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>

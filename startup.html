@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Startup Incubators</title>
+  <style>
+    /* CSS styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #422102;
+      color: #4e2d02;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fff6f6;
+    }
+    
+    .incubator-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .incubator-item {
+      margin-bottom: 30px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      animation: fade-in 1s ease;
+    }
+    
+    .incubator-item h2 {
+      margin-top: 0;
+      color: #337ab7;
+    }
+    
+    .incubator-item p {
+      margin-bottom: 0;
+    }
+    
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Startup Incubators</h1>
+  
+  <ul class="incubator-list">
+    <li class="incubator-item">
+      <h2>Y Combinator</h2>
+      <p>Y Combinator is one of the most prestigious startup incubators globally. It provides funding, mentorship, and a three-month program for early-stage startups.</p>
+    </li>
+    <li class="incubator-item">
+      <h2>Techstars</h2>
+      <p>Techstars operates a network of startup accelerators across various cities and industries. They offer mentorship, funding, and a three-month intensive program.</p>
+    </li>
+    <li class="incubator-item">
+      <h2>500 Startups</h2>
+      <p>500 Startups is a global venture capital firm and seed accelerator. They invest in early-stage startups and provide access to mentors, office space, and resources.</p>
+    </li>
+    <li class="incubator-item">
+      <h2>StartX</h2>
+      <p>StartX is a nonprofit startup accelerator affiliated with Stanford University. It supports Stanford-affiliated entrepreneurs by providing resources, mentorship, and a vibrant community.</p>
+    </li>
+    <li class="incubator-item">
+      <h2>Founders Factory</h2>
+      <p>Founders Factory is a corporate-backed startup accelerator and incubator. They provide support in various sectors, including AI, health tech, and fintech.</p>
+    </li>
+    <li class="incubator-item">
+      <h2>MassChallenge</h2>
+      <p>MassChallenge is a global network of startup accelerators. They offer a four-month program, mentorship, and access to a vast network of experts and resources.</p>
+    </li>
+    <li class="incubator-item">
+      <h2>Plug and Play</h2>
+      <p>Plug and Play is a global innovation platform and accelerator that connects startups with corporations and investors. They operate across various industries.</p>
+    </li>
+  </ul>
+
+  <script>
+    // JavaScript code for animating the fade-in effect
+    const incubatorItems = document.querySelectorAll('.incubator-item');
+    
+    incubatorItems.forEach(item => {
+      item.style.opacity = '0';
+    });
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      incubatorItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.2}s`;
+        item.style.opacity = '1';
+      });
+    });
+  </script>
+</body>
+</html>

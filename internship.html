@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alumni Internships Board</title>
+  <style>
+    /* CSS styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f1f1f1;
+    }
+    
+    h1 {
+      text-align: center;
+      background-color: #337ab7;
+      color: #fff;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .job-container {
+      margin-bottom: 20px;
+      animation: fade-in 1s ease;
+    }
+    
+    .job-container input[type="text"],
+    .job-container textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .job-container input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #337ab7;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .job-listings {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .job-listings li {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #fff;
+      animation: slide-up 0.5s ease;
+    }
+    
+    .job-listings li span {
+      font-weight: bold;
+    }
+
+    @keyframes fade-in {
+       0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    @keyframes slide-up {
+      0% {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+  <style>
+    /* Additional CSS styling for colors */
+    h1 {
+      background-color: #ff7f50; /* Coral */
+    }
+    
+    input[type="submit"] {
+      background-color: #4caf50; /* Green */
+    }
+    
+    .job-listings li {
+      background-color: #f8f8ff; /* Ghost White */
+    }
+  </style>
+</head>
+<body>
+  <h1>Alumni Internships Board</h1>
+  
+  <div class="job-container">
+    <h2>Add Internships Listing</h2>
+    <form id="jobForm">
+      <input type="text" id="companyInput" placeholder="Company Name" required>
+      <br>
+      <input type="text" id="positionInput" placeholder="Internship Type" required>
+      <br>
+      <textarea id="descriptionInput" placeholder="Internship Description" required></textarea>
+      <br>
+      <input type="submit" value="Submit Job Listing">
+    </form>
+  </div>
+  
+  <ul class="job-listings" id="jobListings">
+    <!-- Job listings will be displayed here -->
+  </ul>
+  
+  <script>
+    // JavaScript code for managing job listings
+    const jobForm = document.getElementById('jobForm');
+    const jobListings = document.getElementById('jobListings');
+    let jobsData = [];
+    
+    // Check if jobsData exists in localStorage
+    if (localStorage.getItem('jobsData')) {
+      // Retrieve jobsData from localStorage
+      jobsData = JSON.parse(localStorage.getItem('jobsData'));
+    }
+    
+    function addJobListing() {
+      const company = document.getElementById('companyInput').value;
+      const position = document.getElementById('positionInput').value;
+      const description = document.getElementById('descriptionInput').value;
+      
+      // Create new job listing object
+      const newJob = {
+        company: company,
+        position: position,
+        description: description
+      };
+      
+      // Add new job listing to the data
+      jobsData.push(newJob);
+      
+      // Reset the form
+      jobForm.reset();
+      
+      // Refresh the job listings
+      refreshJobListings();
+      
+      // Store updated jobsData in localStorage
+      localStorage.setItem('jobsData', JSON.stringify(jobsData));
+    }
+    
+    function refreshJobListings() {
+      // Clear previous job listings
+      jobListings.innerHTML = '';
+      
+      // Display job listings
+      jobsData.forEach(job => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<span>${job.company}</span> - ${job.position}<br>${job.description}`;
+        jobListings.appendChild(listItem);
+      });
+    }
+    
+    // Add event listener
+    jobForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent form submission
+      addJobListing();
+    });
+    
+    // Refresh job listings on page load
+    refreshJobListings();
+  </script>
+</body>
+</html>

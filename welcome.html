@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #welcome-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .welcome-text {
+      color: #000000;
+      font-size: 58px;
+      margin-bottom: 20px;
+    }
+
+    .animation-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 25px;
+      left: 25px;
+    }
+
+    .spinner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 50px;
+      height: 50px;
+      border: 3px solid #333;
+      border-top-color: #777;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const spinner = document.querySelector(".spinner");
+
+      setTimeout(function() {
+        spinner.style.display = "none";
+        window.location.href = "index.html"; // Replace "main.html" with the relative path of your project's main page
+      }, 2000);
+    });
+  </script>
+  
+  
+</head>
+<body>
+  <div id="welcome-container">
+    <h1 class="welcome-text">Welcome to Our GGCSF Alumni Website!</h1>
+    <div class="animation-container">
+      <img src="./img/g.png" alt="Alumni Logo" width="900px" class="logo">
+      <div class="spinner"></div>
+    </div>
+  </div>
+</body>
+</html>
